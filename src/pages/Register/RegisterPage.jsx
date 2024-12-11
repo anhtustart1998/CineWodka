@@ -1,27 +1,77 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { loginStart, loginSuccess, loginFailure } from "../../Auth/authSlice";
+import { authAPI } from "../../services/authAPI";
+import { validateForm } from "../../Utils/validation";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 export const RegisterPage = () => {
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     taiKhoan: "",
     matKhau: "",
     email: "",
     soDt: "",
-    maNhom: "",
+    maNhom: "MK15",
     hoTen: "",
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    // Simulate API call
-    setTimeout(() => setLoading(false), 1000);
+  const [errors, setErrors] = useState({});
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLoading, error: apiError } = useSelector((state) => state.auth);
+
+  const validateField = (name, value) => {
+    if (validateForm[name]) {
+      return validateForm[name](value);
+    }
+    return "";
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    const error = validateField(name, value);
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }));
+  };
+
+  const isFormValid = () => {
+    const newErrors = {};
+    Object.keys(formData).forEach((key) => {
+      if (validateForm[key]) {
+        const error = validateField(key, formData[key]);
+        if (error) newErrors[key] = error;
+      }
+    });
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!isFormValid()) {
+      return;
+    }
+
+    dispatch(loginStart());
+
+    try {
+      const response = await authAPI.register(formData);
+      dispatch(loginSuccess(response.content));
+      navigate("/");
+    } catch (error) {
+      dispatch(loginFailure(error.message));
+    }
   };
 
   return (
@@ -48,8 +98,12 @@ export const RegisterPage = () => {
                 required
                 className="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white"
                 placeholder="Enter your username"
+                value={formData.taiKhoan}
                 onChange={handleChange}
               />
+              {errors.taiKhoan && (
+                <p className="mt-1 text-sm text-red-500">{errors.taiKhoan}</p>
+              )}
             </div>
 
             <div className="relative">
@@ -63,6 +117,7 @@ export const RegisterPage = () => {
                   required
                   className="block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white pr-10"
                   placeholder="Create a password"
+                  value={formData.matKhau}
                   onChange={handleChange}
                 />
                 <button
@@ -77,6 +132,9 @@ export const RegisterPage = () => {
                   )}
                 </button>
               </div>
+              {errors.matKhau && (
+                <p className="mt-1 text-sm text-red-500">{errors.matKhau}</p>
+              )}
             </div>
 
             <div>
@@ -89,8 +147,12 @@ export const RegisterPage = () => {
                 required
                 className="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white"
                 placeholder="Enter your full name"
+                value={formData.hoTen}
                 onChange={handleChange}
               />
+              {errors.hoTen && (
+                <p className="mt-1 text-sm text-red-500">{errors.hoTen}</p>
+              )}
             </div>
 
             <div>
@@ -103,8 +165,12 @@ export const RegisterPage = () => {
                 required
                 className="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white"
                 placeholder="Enter your email"
+                value={formData.email}
                 onChange={handleChange}
               />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+              )}
             </div>
 
             <div>
@@ -117,8 +183,12 @@ export const RegisterPage = () => {
                 required
                 className="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white"
                 placeholder="Enter your phone number"
+                value={formData.soDt}
                 onChange={handleChange}
               />
+              {errors.soDt && (
+                <p className="mt-1 text-sm text-red-500">{errors.soDt}</p>
+              )}
             </div>
 
             <div>
@@ -131,17 +201,22 @@ export const RegisterPage = () => {
                 required
                 className="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-white"
                 placeholder="Enter your group code"
+                value={formData.maNhom}
                 onChange={handleChange}
               />
             </div>
           </div>
 
+          {apiError && (
+            <p className="text-red-500 text-sm text-center">{apiError}</p>
+          )}
+
           <button
             type="submit"
-            disabled={loading}
+            disabled={isLoading}
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? (
+            {isLoading ? (
               <Loader2 className="h-5 w-5 animate-spin" />
             ) : (
               "Mix & Join! 🎉"
@@ -150,12 +225,12 @@ export const RegisterPage = () => {
 
           <p className="text-center text-sm text-gray-600 dark:text-gray-400">
             Already have a ticket?{" "}
-            <a
-              href="/login"
+            <NavLink
+              to={"/login"}
               className="font-medium text-purple-600 hover:text-purple-500"
             >
               Sign in here
-            </a>
+            </NavLink>
           </p>
         </form>
       </div>
