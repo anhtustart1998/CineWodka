@@ -30,6 +30,7 @@ function App() {
 
             <Footer />
             <div>a</div>
+            <div>huy</div>
           </div>
         </BrowserRouter>
       </Provider>
