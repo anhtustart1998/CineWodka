@@ -3,7 +3,7 @@ import { FiGithub, FiFacebook, FiLinkedin } from "react-icons/fi";
 
 export const Footer = () => {
   return (
-    <footer className="w-full bg-white dark:bg-gray-900 transition-colors duration-200">
+    <footer className="z-50 w-full border dark:border-gray-800 dark:shadow-lg shadow-md bg-white dark:bg-gray-900 transition-colors duration-100">
       <div className="max-w-6xl mx-auto px-4 py-6">
         {/* Main Footer Content */}
         <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">

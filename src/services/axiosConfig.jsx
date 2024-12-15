@@ -10,3 +10,28 @@ export const axiosInstance = axios.create({
     "Content-Type": "application/json-patch+json",
   },
 });
+
+const protectedEndpoints = [
+  "/QuanLyNguoiDung/ThongTinTaiKhoan",
+  "/QuanLyNguoiDung/ThemNguoiDung",
+  "/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
+  "/QuanLyNguoiDung/XoaNguoiDung",
+  "/QuanLyPhim/CapNhatPhimUpload",
+  "/QuanLyPhim/XoaPhim",
+];
+
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = JSON.parse(localStorage.getItem("user"))?.accessToken;
+    if (
+      protectedEndpoints.some((endpoint) => config.url.includes(endpoint)) &&
+      token
+    ) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { loginStart, loginSuccess, loginFailure } from "../../Auth/authSlice";
+import { loginStart, loginSuccess, loginFailure } from "../../Redux/authSlice";
 import { authAPI } from "../../services/authAPI";
 
 export const LoginPage = () => {

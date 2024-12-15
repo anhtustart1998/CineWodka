@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Menu, X, UserCircle, LogOut } from "lucide-react";
+import { Menu, X, UserCircle, LogOut, SquareKanban } from "lucide-react";
 import { ThemeToggle } from "../ThemeToggle/ThemeToggle.jsx";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../Auth/authSlice.jsx";
+import { logout } from "../../Redux/authSlice.jsx";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
   const { isDark } = useTheme();
   // Take all user data from Redux
   const { user } = useSelector((state) => state.auth);
@@ -76,11 +77,17 @@ export const Navbar = () => {
         <LogOut className="w-4 h-4" />
         <span>Logout</span>
       </button>
+      {user.maLoaiNguoiDung === "QuanTri" && (
+        <NavLink to={"/admin"} className="flex items-center space-x-2">
+          <SquareKanban className="w-5 h-5" />
+          <span className="font-medium">Admin</span>
+        </NavLink>
+      )}
     </div>
   );
 
   return (
-    <nav className="w-full fixed top-0 left-0 z-50 shadow-md dark:bg-gray-900 dark:text-white bg-white text-gray-800 transition-colors duration-200">
+    <nav className="w-full fixed top-0 left-0 z-50 border dark:border-gray-800 shadow-md dark:shadow-lg dark:bg-gray-900 dark:text-white bg-white text-gray-800 transition-colors duration-100">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
