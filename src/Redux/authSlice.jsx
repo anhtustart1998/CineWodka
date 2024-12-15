@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: null,
+    user: localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user"))
+      : null,
     token: null,
     isLoading: false,
     error: null,
@@ -17,6 +19,7 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.user = action.payload;
       state.token = action.payload.accessToken;
+      localStorage.setItem("user", JSON.stringify(action.payload));
     },
     loginFailure: (state, action) => {
       state.isLoading = false;
@@ -25,6 +28,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.token = null;
+      localStorage.removeItem("user");
     },
   },
 });

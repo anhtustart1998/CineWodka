@@ -11,26 +11,40 @@ import { RegisterPage } from "./pages/Register/RegisterPage.jsx";
 import { HomePage } from "./pages/Home/HomePage.jsx";
 import { Provider } from "react-redux";
 import { store } from "./Store/store.jsx";
+import { AdminPage } from "./pages/Admin/AdminPage.jsx";
+import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute.jsx";
+import { UserManagement } from "./components/AdminManagements/UserManagements/UserManagement.jsx";
+import { MovieManagement } from "./components/AdminManagements/MovieManagements/MovieManagement.jsx";
 
 function App() {
   return (
     <ThemeProvider>
       <Provider store={store}>
         <BrowserRouter>
-          <div className="min-h-screen flex flex-col text-sm bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300 overflow-x-hidden w-full">
+          <div className="min-h-screen flex flex-col text-sm bg-gray-100 dark:bg-gray-900 transition-colors duration-300 overflow-x-hidden w-full">
             <Navbar />
 
             <main className="flex-grow w-full mt-20">
               <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="login" element={<LoginPage />} />
-                <Route path="register" element={<RegisterPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route
+                  path="/admin"
+                  element={
+                    <ProtectedRoute adminOnly>
+                      <AdminPage />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route index element={<div>Admin Dashboard</div>} />
+                  <Route path="users" element={<UserManagement />} />
+                  <Route path="movies" element={<MovieManagement />} />
+                </Route>
               </Routes>
             </main>
 
             <Footer />
-            <div>a</div>
-            <div>huy</div>
           </div>
         </BrowserRouter>
       </Provider>

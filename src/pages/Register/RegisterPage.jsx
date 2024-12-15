@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { loginStart, loginSuccess, loginFailure } from "../../Auth/authSlice";
+import { loginStart, loginSuccess, loginFailure } from "../../Redux/authSlice";
 import { authAPI } from "../../services/authAPI";
 import { validateForm } from "../../Utils/validation";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
@@ -78,7 +78,7 @@ export const RegisterPage = () => {
     <div className="flex justify-center p-4">
       <div className="w-full max-w-md space-y-6 bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
             Join the Party! 🎬🍸
           </h2>
           <p className="mt-2 text-gray-600 dark:text-gray-300">
