@@ -24,7 +24,7 @@ export const userAPI = {
     return response.data;
   },
   updateUser: async (userData) => {
-    const response = await axiosInstance.post(
+    const response = await axiosInstance.put(
       "/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
       {
         ...userData,
