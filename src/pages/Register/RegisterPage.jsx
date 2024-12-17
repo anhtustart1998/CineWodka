@@ -13,7 +13,7 @@ export const RegisterPage = () => {
     matKhau: "",
     email: "",
     soDt: "",
-    maNhom: "MK15",
+    maNhom: "GP00",
     hoTen: "",
   });
 

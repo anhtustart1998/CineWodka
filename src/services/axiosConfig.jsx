@@ -18,6 +18,7 @@ const protectedEndpoints = [
   "/QuanLyNguoiDung/XoaNguoiDung",
   "/QuanLyPhim/CapNhatPhimUpload",
   "/QuanLyPhim/XoaPhim",
+  "/api/QuanLyPhim/ThemPhimUploadHinh",
 ];
 
 axiosInstance.interceptors.request.use(

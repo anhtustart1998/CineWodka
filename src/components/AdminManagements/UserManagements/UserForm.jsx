@@ -20,7 +20,6 @@ export const UserForm = ({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log("Changing:", name, value);
     setFormData((prev) => ({
       ...prev,
       [name]: value,
