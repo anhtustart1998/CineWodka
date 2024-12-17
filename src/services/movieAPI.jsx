@@ -16,14 +16,20 @@ export const movieAPI = {
   createMovie: async (formData) => {
     const response = await axiosInstance.post(
       "/QuanLyPhim/ThemPhimUploadHinh",
-      formData
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
     );
     return response.data;
   },
   updateMovie: async (formData) => {
     const response = await axiosInstance.post(
       "/QuanLyPhim/CapNhatPhimUpload",
-      formData
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
     );
     return response.data;
   },
