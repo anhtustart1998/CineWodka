@@ -107,8 +107,8 @@ export const MovieManagement = () => {
     if (startDate && endDate) {
       try {
         dispatch(setLoading(true));
-        const formattedStartDate = formatDateToAPI(startDate);
-        const formattedEndDate = formatDateToAPI(endDate);
+        const formattedStartDate = formatDate(startDate);
+        const formattedEndDate = formatDate(endDate);
 
         const response = await movieAPI.getMoviesByDate(
           formattedStartDate,
@@ -138,7 +138,7 @@ export const MovieManagement = () => {
     let formDataToSend = new FormData();
 
     if (formData.hinhAnh instanceof File) {
-      formDataToSend.append("File", formData.hinhAnh);
+      formDataToSend.append("hinhAnh", formData.hinhAnh, formData.hinhAnh.name);
     }
 
     // Then append other fields
