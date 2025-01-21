@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = process.env.VITE_API_URL;
-const TOKEN_CYBERSOFT = process.env.VITE_TOKEN_CYBERSOFT;
+const BASE_URL = import.meta.env.VITE_API_URL;
+const TOKEN_CYBERSOFT = import.meta.env.VITE_TOKEN_CYBERSOFT;
 
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
