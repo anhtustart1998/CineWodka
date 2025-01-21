@@ -1,4 +1,4 @@
-const flowbite = require("flowbite-react/tailwind");
+import flowbite from "flowbite-react/tailwind";
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: "class",
@@ -8,6 +8,13 @@ export default {
       fontFamily: {
         // iceland: ["Iceland", "sans-serif"],
         sans: ["Tomorrow", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+      },
+      colors: {
+        "orange-350": "#bb5f2c",
+      },
+      container: {
+        center: true,
       },
     },
   },
