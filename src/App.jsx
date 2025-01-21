@@ -5,7 +5,12 @@ import "./App.css";
 import { ThemeProvider } from "./contexts/ThemeContext.jsx";
 import { Navbar } from "./components/Navbar/Navbar.jsx";
 import { Footer } from "./components/Footer/Footer.jsx";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  BrowserRouter,
+  ScrollRestoration,
+} from "react-router-dom";
 import { LoginPage } from "./pages/Login/LoginPage.jsx";
 import { RegisterPage } from "./pages/Register/RegisterPage.jsx";
 import { HomePage } from "./pages/Home/HomePage.jsx";
@@ -15,6 +20,8 @@ import { AdminPage } from "./pages/Admin/AdminPage.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute.jsx";
 import { UserManagement } from "./components/AdminManagements/UserManagements/UserManagement.jsx";
 import { MovieManagement } from "./components/AdminManagements/MovieManagements/MovieManagement.jsx";
+import DetailMovie from "./pages/Detail/DetailMovie.jsx";
+import ScrollToTop from "./components/CustomerHook/ScrollToTop.jsx";
 
 function App() {
   return (
@@ -24,11 +31,13 @@ function App() {
           <div className="min-h-screen flex flex-col text-sm bg-gray-100 dark:bg-gray-900 transition-colors duration-300 overflow-x-hidden w-full">
             <Navbar />
 
-            <main className="flex-grow w-full mt-20">
+            <main className="flex-grow w-full mt-16">
+              <ScrollToTop />
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="detail/:id" element={<DetailMovie />} />
                 <Route
                   path="/admin"
                   element={

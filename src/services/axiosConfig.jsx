@@ -19,6 +19,11 @@ const protectedEndpoints = [
   "/QuanLyPhim/CapNhatPhimUpload",
   "/QuanLyPhim/XoaPhim",
   "/api/QuanLyPhim/ThemPhimUploadHinh",
+  "/QuanLyPhim/LayDanhSachBanner",
+  "/QuanLyPhim/LayDanhSachPhim",
+  "/QuanLyRap/LayThongTinHeThongRap",
+  "/QuanLyRap/LayThongTinLichChieuHeThongRap",
+  "/QuanLyRap/LayThongTinLichChieuPhim",
 ];
 
 axiosInstance.interceptors.request.use(
